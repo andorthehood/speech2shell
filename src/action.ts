@@ -5,17 +5,10 @@ function shellEscape(value: string) {
 }
 
 type ActionOptions = {
-  commandTemplate?: string;
+  commandTemplate: string;
 };
 
 export function createAction({ commandTemplate }: ActionOptions) {
-  if (!commandTemplate) {
-    return async (text: string) => {
-      console.log(`Transcript: ${text}`);
-      return true;
-    };
-  }
-
   return async (text: string) => {
     const cmd = commandTemplate
       .replaceAll("{text}", shellEscape(text));
