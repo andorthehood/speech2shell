@@ -1,5 +1,5 @@
 {
-  "name": "push2sox",
+  "name": "speech2shell",
   "version": "0.1.0",
   "description": "Listen for START/STOP on serial and record audio with sox",
   "main": "src/index.ts",
@@ -10,7 +10,7 @@
   "dependencies": {
     "@serialport/parser-readline": "^12.0.0",
     "assemblyai": "^4.22.1",
-    "dotenv": "^16.4.7",
+    "minimist": "^1.2.8",
     "serialport": "^12.0.0"
   },
   "devDependencies": {

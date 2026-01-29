@@ -1,4 +1,4 @@
-# push2sox
+# speech2shell
 
 Listen for serial `DOWN`/`UP` commands to control a `sox` recording, then send the WAV to AssemblyAI and run a configurable action on the transcript.
 
@@ -12,38 +12,40 @@ Listen for serial `DOWN`/`UP` commands to control a `sox` recording, then send t
 npm install
 ```
 
-Create a `.env` file based on `.env.example`:
-```
-ASSEMBLYAI_API_KEY=your_key_here
-```
+Pass configuration via CLI flags.
 
 ## Run
 ```bash
-npm start
+npm start -- \
+  --serial-port /dev/cu.usbmodem2102 \
+  --baud-rate 9600 \
+  --sample-rate 44100 \
+  --api-key YOUR_KEY \
+  --action-template "echo {text}"
 ```
 
-## Environment variables
-- `SERIAL_PORT` (default `/dev/cu.usbmodem2102`)
-- `BAUD_RATE` (default `9600`)
-- `SAMPLE_RATE` (default `44100`)
-- `ASSEMBLYAI_API_KEY` (required for transcription)
-- `TRANSCRIPT_COMMAND_TEMPLATE` (optional; defaults to logging to console)
+## CLI flags
+- `--serial-port` (required)
+- `--baud-rate` (default `9600`)
+- `--sample-rate` (default `44100`)
+- `--api-key` (required for transcription)
+- `--action-template` (optional; defaults to logging to console)
 
 ## Make targets
 ```bash
 make free-serial           # kill any process holding the serial port
-make start                 # run the app
+make start                 # run the app (pass ARGS="--serial-port ...")
 ```
 
 ## Action
-If `TRANSCRIPT_COMMAND_TEMPLATE` is set, it runs as a shell command with this placeholder:
+If `--action-template` is set, it runs as a shell command with this placeholder:
 - `{text}` transcript text (shell-escaped)
 
 Examples:
 ```bash
-TRANSCRIPT_COMMAND_TEMPLATE="echo {text}"
-TRANSCRIPT_COMMAND_TEMPLATE="my-agent --prompt {text}"
-TRANSCRIPT_COMMAND_TEMPLATE="python3 ./save_transcript.py {text}"
+--action-template "echo {text}"
+--action-template "my-agent --prompt {text}"
+--action-template "python3 ./save_transcript.py {text}"
 ```
 
 ## Notes
