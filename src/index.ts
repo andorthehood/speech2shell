@@ -48,12 +48,14 @@ async function handleRecordingStop(filePath: string) {
     const text = await transcriber.transcribe(filePath);
     if (text) {
       const ok = await action(text);
-      if (ok) {
-        await recorder.cleanup(filePath);
+      if (!ok) {
+        console.error("Action failed.");
       }
     }
   } catch (err) {
     console.error("Transcription error:", err instanceof Error ? err.message : err);
+  } finally {
+    await recorder.cleanup(filePath);
   }
 }
 

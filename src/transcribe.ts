@@ -30,6 +30,8 @@ export function createTranscriber({ apiKey }: TranscriberOptions) {
       const transcript = await client.transcripts.transcribe(params);
 
       if (transcript && transcript.text) {
+        console.log("Transcription complete.");
+        console.log(`Transcript: ${transcript.text}`);
         return transcript.text;
       }
 

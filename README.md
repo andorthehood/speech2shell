@@ -6,6 +6,7 @@ Listen for serial `DOWN`/`UP` commands to control a `sox` recording, then send t
 - Node.js with native TypeScript support
 - `sox` installed and available on `PATH`
 - A serial device that sends `DOWN` and `UP`
+- An AssemblyAI API key
 
 ## Setup
 ```bash
